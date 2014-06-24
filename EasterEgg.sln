@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasterEgg.Controls", "EasterEgg.Controls\EasterEgg.Controls.csproj", "{1611070F-C2DF-42C8-B495-AFC83376AE9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasterEgg.App.WP7", "EasterEgg.App.WP7\EasterEgg.App.WP7.csproj", "{0FA0CC49-8210-4598-8AEB-AF5B3B15B552}"
