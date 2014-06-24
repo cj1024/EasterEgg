@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:EasterEggControls="clr-namespace:EasterEgg.Controls;assembly=EasterEgg.Controls">
+
+    <RadialGradientBrush x:Key="DefaultSnowForegroundBrush">
+        <GradientStop Color="#7FFFFFFF"/>
+        <GradientStop Color="Transparent" Offset="1"/>
+    </RadialGradientBrush>
+    <SolidColorBrush x:Key="DefaultSnowBackgroundBrush" Color="Snow"/>
+
+    <Style TargetType="EasterEggControls:Snow">
+        <Setter Property="Foreground" Value="{StaticResource DefaultSnowForegroundBrush}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultSnowBackgroundBrush}"/>
+        <Setter Property="Size" Value="20"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="EasterEggControls:Snow">
+                    <Canvas Background="{TemplateBinding Background}" OpacityMask="{TemplateBinding Foreground}" Width="{TemplateBinding Size}" Height="{TemplateBinding Size}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="EasterEggControls:SnowingPanel">
+        <Setter Property="Frequence" Value="0:0:2"/>
+        <Setter Property="FrequenceRange" Value="0:0:1"/>
+        <Setter Property="NonMeltDuration" Value="0:0:3.5"/>
+        <Setter Property="NonMeltDurationRange" Value="0:0:1"/>
+        <Setter Property="MeltDuration" Value="0:0:3.5"/>
+        <Setter Property="MeltDurationRange" Value="0:0:1"/>
+        <Setter Property="Speed" Value="75"/>
+        <Setter Property="SpeedRange" Value="25"/>
+        <Setter Property="Size" Value="15"/>
+        <Setter Property="SizeRange" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="EasterEggControls:SnowingPanel">
+                    <Canvas x:Name="Holder" Background="{TemplateBinding Background}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>
