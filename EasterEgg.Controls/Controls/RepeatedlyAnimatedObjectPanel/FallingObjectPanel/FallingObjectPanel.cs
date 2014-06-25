@@ -14,14 +14,14 @@ namespace EasterEgg.Controls
     {
 
         public static readonly DependencyProperty FallingObjectStyleProperty = DependencyProperty.Register(
-            "FallingObjectStyle", typeof (Style), typeof (FallingObjectPanel<T>), new PropertyMetadata(default(Style)));
+            "FallingObjectStyle", typeof(Style), typeof(FallingObjectPanel<T>), new PropertyMetadata(default(Style)));
 
         public Style FallingObjectStyle
         {
-            get { return (Style) GetValue(FallingObjectStyleProperty); }
+            get { return (Style)GetValue(FallingObjectStyleProperty); }
             set { SetValue(FallingObjectStyleProperty, value); }
         }
-        
+
         protected readonly Queue<T> ObjectsPool;
 
         protected FallingObjectPanel()
@@ -37,8 +37,8 @@ namespace EasterEgg.Controls
             {
                 Holder.Children.Add(target);
             }
-            target.Size = Size + Random.NextDouble()*SizeRange;
-            Canvas.SetLeft(target, Random.NextDouble()*ActualWidth);
+            target.Size = Size + Random.NextDouble() * SizeRange;
+            Canvas.SetLeft(target, Random.NextDouble() * ActualWidth);
             Canvas.SetTop(target, -Size);
             var sb = GenerateTransition(target);
             sb.Completed += (storyboard, eventargs) => HandleSnowTransitionComplete(target);
@@ -47,22 +47,36 @@ namespace EasterEgg.Controls
 
         protected virtual Storyboard GenerateTransition(T target)
         {
-            var transform = new CompositeTransform();
-            target.RenderTransform = transform;
+            target.RenderTransform = new CompositeTransform();
             target.Opacity = 1;
             var result = new Storyboard();
             var speed = Speed + Random.NextDouble() * SpeedRange;
             var fallDuration = TimeSpan.FromSeconds(ActualHeight / speed);
+            var nonMeltDuration = TimeSpan.FromMilliseconds(NonMeltDuration.Milliseconds + Random.NextDouble() * NonMeltDurationRange.Milliseconds);
+            var meltDuration = TimeSpan.FromMilliseconds(MeltDuration.Milliseconds + Random.NextDouble() * MeltDurationRange.Milliseconds);
+            result.Children.Add(GenerateFallingTransition(target, fallDuration, TimeSpan.Zero)); 
+            result.Children.Add(GenerateMeltTransition(target, nonMeltDuration, meltDuration, fallDuration));
+            result.BeginTime = TimeSpan.FromMilliseconds(Random.NextDouble() * FrequenceRange.Milliseconds);
+            return result;
+        }
+
+        protected virtual Timeline GenerateFallingTransition(T target, TimeSpan duration, TimeSpan delay)
+        {
             var translationY = new DoubleAnimation
             {
+                BeginTime = delay,
                 From = 0,
                 To = ActualHeight - target.Size,
-                Duration = fallDuration,
+                Duration = duration,
                 EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
             };
-            Storyboard.SetTarget(translationY, transform);
-            Storyboard.SetTargetProperty(translationY, new PropertyPath("CompositeTransform.TranslateY"));
-            result.Children.Add(translationY);
+            Storyboard.SetTarget(translationY, target);
+            Storyboard.SetTargetProperty(translationY, new PropertyPath("(UIElement.RenderTransform).(CompositeTransform.TranslateY)"));
+            return translationY;
+        }
+
+        protected virtual Timeline GenerateMeltTransition(T target, TimeSpan nonMeltDuration, TimeSpan meltDuration, TimeSpan delay)
+        {
             var melt = new DoubleAnimationUsingKeyFrames();
             melt.KeyFrames.Add(new EasingDoubleKeyFrame
             {
@@ -71,25 +85,22 @@ namespace EasterEgg.Controls
             });
             melt.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = fallDuration,
-                Value = 1
-            });
-            var nonMeltDuration = fallDuration.Add(TimeSpan.FromMilliseconds(NonMeltDuration.Milliseconds + Random.NextDouble() * NonMeltDurationRange.Milliseconds));
-            melt.KeyFrames.Add(new EasingDoubleKeyFrame
-            {
-                KeyTime = nonMeltDuration,
+                KeyTime = delay,
                 Value = 1
             });
             melt.KeyFrames.Add(new EasingDoubleKeyFrame
             {
-                KeyTime = nonMeltDuration.Add(TimeSpan.FromMilliseconds(MeltDuration.Milliseconds + Random.NextDouble() * MeltDurationRange.Milliseconds)),
+                KeyTime = TimeSpan.FromMilliseconds(delay.TotalMilliseconds + nonMeltDuration.TotalMilliseconds),
+                Value = 1
+            });
+            melt.KeyFrames.Add(new EasingDoubleKeyFrame
+            {
+                KeyTime = TimeSpan.FromMilliseconds(delay.TotalMilliseconds + nonMeltDuration.TotalMilliseconds + meltDuration.TotalMilliseconds),
                 Value = 0
             });
             Storyboard.SetTarget(melt, target);
             Storyboard.SetTargetProperty(melt, new PropertyPath("UIElement.Opacity"));
-            result.Children.Add(melt);
-            result.BeginTime = TimeSpan.FromMilliseconds(Random.NextDouble() * FrequenceRange.Milliseconds);
-            return result;
+            return melt;
         }
 
         protected virtual void HandleSnowTransitionComplete(T target)
