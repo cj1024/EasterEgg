@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Windows.Phone.PersonalInformation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using EasterEgg.App.WP8.Resources;
@@ -37,5 +38,7 @@ namespace EasterEgg.App.WP8
         //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
         //    ApplicationBar.MenuItems.Add(appBarMenuItem);
         //}
+
+
     }
 }

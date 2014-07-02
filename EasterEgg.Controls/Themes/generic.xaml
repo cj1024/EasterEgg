@@ -39,5 +39,22 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="EasterEggControls:Human">
+        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="EasterEggControls:Human">
+                    <Canvas Background="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <EasterEggControls:HumanHead x:Name="Head" Foreground ="{TemplateBinding Foreground}"/>
+                        <EasterEggControls:HumanArm x:Name="RightArm" Direction="Right" Foreground ="{TemplateBinding Foreground}"/>
+                        <EasterEggControls:HumanLeg x:Name="RightLeg" Direction="Right" Foreground ="{TemplateBinding Foreground}"/>
+                        <EasterEggControls:HumanBody x:Name="Body" Foreground ="{TemplateBinding Foreground}"/>
+                        <EasterEggControls:HumanLeg x:Name="LeftLeg" Direction="Left" Foreground ="{TemplateBinding Foreground}"/>
+                        <EasterEggControls:HumanArm x:Name="LeftArm" Direction="Left" Foreground ="{TemplateBinding Foreground}"/>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
 </ResourceDictionary>

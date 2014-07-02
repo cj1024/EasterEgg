@@ -80,6 +80,7 @@
     <Compile Include="Controls\RepeatedlyAnimatedObjectPanel\FallingObjectPanel\Snow\Snow.cs" />
     <Compile Include="Controls\RepeatedlyAnimatedObjectPanel\FallingObjectPanel\Snow\SnowingPanel.cs" />
     <Compile Include="Controls\RepeatedlyAnimatedObjectPanel\RepeatedlyAnimatedObjectPanel.cs" />
+    <Compile Include="Controls\Shapes\Human.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\SafeQueue.cs" />
   </ItemGroup>

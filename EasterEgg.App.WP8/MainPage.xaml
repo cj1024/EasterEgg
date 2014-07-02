@@ -15,8 +15,15 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:Pivot Title="Easter Eggs">
+        <phone:PivotItem Header="Human">
+            <Grid>
+                <EasterEggControls:Human HumanSize="20,160"/>
+            </Grid>
+        </phone:PivotItem>
         <phone:PivotItem Header="Snow">
-            <EasterEggControls:SnowingPanel/>
+            <Grid>
+                <EasterEggControls:SnowingPanel/>
+            </Grid>
         </phone:PivotItem>
     </phone:Pivot>
 
