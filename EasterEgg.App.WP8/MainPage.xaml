@@ -16,8 +16,8 @@
 
     <phone:Pivot Title="Easter Eggs">
         <phone:PivotItem Header="Human">
-            <Grid>
-                <EasterEggControls:Human HumanSize="20,160"/>
+            <Grid Background="Red" Height="100">
+                <EasterEggControls:Human HumanSize="20,104"/>
             </Grid>
         </phone:PivotItem>
         <phone:PivotItem Header="Snow">
